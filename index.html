@@ -30,7 +30,7 @@
     .modal-box .sub { font-size: 13px; color: #b86f5b; font-weight: 600; margin-bottom: 16px; }
     .field { margin-bottom: 14px; }
     .field label { display: block; font-size: 13px; color: #5c4d47; margin-bottom: 5px; font-weight: 600; }
-    .field input, .field select { width: 100%; padding: 10px 12px; border: 1px solid #e6cfc8; border-radius: 10px; font-size: 14px; outline: none; }
+    .field input, .field select { width: 100%; padding: 10px 12px; border: 1px solid #e6cfc8; border-radius: 10px; font-size: 14px; outline: none; background: #fff; color: #3a2e29; }
     .submit-btn { width: 100%; background: #b86f5b; color: #fff; border: none; padding: 13px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
     .close-link { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: #8c7a72; cursor: pointer; }
   </style>
@@ -85,11 +85,11 @@
       </div>
       <div class="field">
         <label>聯絡方式（手機或 LINE ID）</label>
-        <input type="text" id="custContact" placeholder="例如：0912-345-678 或 LINE ID">
+        <input type="text" id="custContact" placeholder="例如：0912345678">
       </div>
       <div class="field">
         <label>希望預約的日期與時間</label>
-        <input type="text" id="custTime" placeholder="例如：11/29 14:00">
+        <input type="datetime-local" id="custTime">
       </div>
       <div class="field">
         <label>是否需要卸睫？</label>
@@ -123,13 +123,16 @@
     async function submitBooking() {
       const name = document.getElementById('custName').value.trim();
       const contact = document.getElementById('custContact').value.trim();
-      const time = document.getElementById('custTime').value.trim();
+      const rawTime = document.getElementById('custTime').value;
       const remove = document.getElementById('needRemove').value;
 
-      if (!name || !contact || !time) {
+      if (!name || !contact || !rawTime) {
         alert("請填寫您的稱呼、聯絡方式與希望預約的時間喔！");
         return;
       }
+
+      // 將 2026-11-29T14:00 格式化為 2026/11/29 14:00，方便閱讀與試算表自動排序
+      const formattedTime = rawTime.replace('T', ' ').replace(/-/g, '/');
 
       const btn = document.getElementById('submitBtn');
       btn.innerText = "系統傳送中...";
@@ -143,11 +146,11 @@
             service: currentService,
             name: name,
             contact: contact,
-            time: time,
+            time: formattedTime,
             remove: remove
           })
         });
-        alert(`✅ 預約申請已成功送出！\n\n稱呼：${name}\n聯絡方式：${contact}\n項目：${currentService}\n時間：${time}\n備註：${remove}\n\n系統已通知美睫師，稍後將為您確認時段 💕`);
+        alert(`✅ 預約申請已成功送出！\n\n稱呼：${name}\n聯絡方式：${contact}\n項目：${currentService}\n時間：${formattedTime}\n備註：${remove}\n\n系統已通知美睫師，稍後將為您確認時段 💕`);
         closeForm();
       } catch (err) {
         alert("傳送失敗，請檢查 n8n Webhook 是否已開啟 Active！");

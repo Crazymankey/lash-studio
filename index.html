@@ -3,33 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>專屬美睫沙龍｜線上價目表與快速預約</title>
+  <title>LASH STUDIO｜專屬美睫沙龍・24H 線上預約系統</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #fdf8f6; color: #4a3f3a; padding: 20px 16px 40px; }
-    .container { max-width: 480px; margin: 0 auto; }
-    .header { text-align: center; margin-bottom: 24px; padding-top: 10px; }
-    .header .tag { display: inline-block; background: #f3e1db; color: #9e6b5b; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 8px; font-weight: 600; }
-    .header h1 { font-size: 22px; color: #3a2e29; margin-bottom: 6px; }
+    body { background: #fdf8f6; color: #4a3f3a; padding: 20px 16px 50px; }
+    .container { max-width: 460px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 24px; padding-top: 8px; }
+    .header .tag { display: inline-block; background: #f3e1db; color: #9e6b5b; font-size: 12px; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; font-weight: 600; }
+    .header h1 { font-size: 24px; color: #3a2e29; margin-bottom: 6px; }
     .header p { font-size: 13px; color: #8c7a72; }
-    .card { background: #ffffff; border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(158, 107, 91, 0.08); border: 1px solid #f5ebe8; position: relative; }
+
+    .card { background: #ffffff; border-radius: 18px; padding: 20px; margin-bottom: 16px; box-shadow: 0 6px 20px rgba(158, 107, 91, 0.07); border: 1px solid #f5ebe8; position: relative; }
     .card.popular { border: 2px solid #d49a89; }
-    .badge { position: absolute; top: -10px; right: 16px; background: #d49a89; color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: bold; }
+    .badge { position: absolute; top: -11px; right: 16px; background: linear-gradient(135deg, #d49a89, #b86f5b); color: #fff; font-size: 11px; padding: 3px 12px; border-radius: 12px; font-weight: bold; }
     .title-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-    .title-row h2 { font-size: 17px; color: #3a2e29; }
-    .price { font-size: 20px; font-weight: 700; color: #b86f5b; }
-    .desc { font-size: 13px; color: #7a6a63; line-height: 1.5; margin-bottom: 14px; }
-    .btn { display: block; width: 100%; text-align: center; background: #b86f5b; color: #fff; text-decoration: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 600; transition: 0.2s; }
+    .title-row h2 { font-size: 17px; color: #3a2e29; font-weight: 700; }
+    .price { font-size: 21px; font-weight: 800; color: #b86f5b; }
+    .desc { font-size: 13px; color: #7a6a63; line-height: 1.55; margin-bottom: 16px; }
+    .btn { display: block; width: 100%; text-align: center; background: #b86f5b; color: #fff; border: none; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
     .btn:active { transform: scale(0.98); background: #9e5b49; }
-    .notice { background: #fff9f7; border-radius: 12px; padding: 14px; font-size: 12px; color: #8c7a72; line-height: 1.6; margin-top: 20px; }
+
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; justify-content: center; align-items: center; padding: 16px; }
+    .modal.active { display: flex; }
+    .modal-box { background: #fff; width: 100%; max-width: 400px; border-radius: 20px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+    .modal-box h3 { font-size: 18px; color: #3a2e29; margin-bottom: 4px; }
+    .modal-box .sub { font-size: 13px; color: #b86f5b; font-weight: 600; margin-bottom: 16px; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; color: #5c4d47; margin-bottom: 5px; font-weight: 600; }
+    .field input, .field select { width: 100%; padding: 10px 12px; border: 1px solid #e6cfc8; border-radius: 10px; font-size: 14px; outline: none; }
+    .submit-btn { width: 100%; background: #b86f5b; color: #fff; border: none; padding: 13px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
+    .close-link { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: #8c7a72; cursor: pointer; }
   </style>
 </head>
 <body>
+
   <div class="container">
     <div class="header">
-      <span class="tag">✨ 預約制美睫美學工作室</span>
-      <h1>2026 精選美睫價目表</h1>
-      <p>點擊下方方案，系統將自動為您帶入 LINE 預約</p>
+      <span class="tag">✨ LASH STUDIO 預約制美學</span>
+      <h1>精選美睫線上價目表</h1>
+      <p>點選心儀款式填寫時段，系統將自動為您保留預約</p>
     </div>
 
     <div class="card">
@@ -38,7 +50,7 @@
         <span class="price">$1,099</span>
       </div>
       <p class="desc">單根嫁接、極致輕盈無負擔，適合日常上班、喜歡偽素顏清透妝感的妳。</p>
-      <a class="btn" href="https://line.me/R/oaMessage/@136nblir/?%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A0%90%E7%B4%84%E7%BE%8E%E7%9D%AB%E3%80%90%E8%87%AA%E7%84%B6%E7%A9%BA%E6%B0%A3%E6%84%9F%20150%E6%A0%B9%E3%80%91">一鍵預約此款式</a>
+      <button class="btn" onclick="openForm('自然空氣感 150 根 ($1,099)')">一鍵預約此款式</button>
     </div>
 
     <div class="card popular">
@@ -48,7 +60,7 @@
         <span class="price">$1,399</span>
       </div>
       <p class="desc">溫柔有神、自帶隱形內眼線效果，不化妝也能擁有自然放大的電眼魅力。</p>
-      <a class="btn" href="https://line.me/R/oaMessage/@136nblir/?%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A0%90%E7%B4%84%E7%BE%8E%E7%9D%AB%E3%80%90%E6%97%A5%E7%B3%BB%E4%BB%99%E5%A5%B3%E6%AC%BE%20250%E6%A0%B9%E3%80%91">一鍵預約此款式</a>
+      <button class="btn" onclick="openForm('日系仙女款 250 根 ($1,399)')">一鍵預約此款式</button>
     </div>
 
     <div class="card">
@@ -57,14 +69,88 @@
         <span class="price">$1,699</span>
       </div>
       <p class="desc">多層次絨毛感、濃密卻不厚重，適合拍照、重要聚會或喜歡妝感明顯的妳。</p>
-      <a class="btn" href="https://line.me/R/oaMessage/@136nblir/?%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A0%90%E7%B4%84%E7%BE%8E%E7%9D%AB%E3%80%90%E5%B1%B1%E8%8C%B6%E8%8A%B1%E6%BF%83%E5%AF%86%E6%AC%BE%20400%E6%A0%B9%E3%80%91">一鍵預約此款式</a>
-    </div>
-
-    <div class="notice">
-      <strong>📌 預約小提醒：</strong><br>
-      • 首次體驗皆贈送「睫毛專用清潔刷＋洗臉海綿」<br>
-      • 他店卸睫酌收 $200，本店續接卸睫免費
+      <button class="btn" onclick="openForm('山茶花濃密款 400 根 ($1,699)')">一鍵預約此款式</button>
     </div>
   </div>
+
+  <!-- 預約填寫彈窗 -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-box">
+      <h3>預約時段登記</h3>
+      <div class="sub" id="selectedService"></div>
+
+      <div class="field">
+        <label>您的稱呼</label>
+        <input type="text" id="custName" placeholder="例如：陳小姐">
+      </div>
+      <div class="field">
+        <label>希望預約的日期與時間</label>
+        <input type="text" id="custTime" placeholder="例如：本週六下午 2:00">
+      </div>
+      <div class="field">
+        <label>是否需要卸睫？</label>
+        <select id="needRemove">
+          <option value="不需要卸睫">不需要卸睫</option>
+          <option value="需要卸睫（本店續接）">需要卸睫（本店續接）</option>
+          <option value="需要卸睫（他店卸除）">需要卸睫（他店卸除）</option>
+        </select>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitBooking()">確認送出預約</button>
+      <span class="close-link" onclick="closeForm()">取消返回</span>
+    </div>
+  </div>
+
+  <script>
+    const N8N_WEBHOOK_URL = "https://primary-production-5317642b.up.railway.app/webhook/lash-studio-demo";
+
+    let currentService = "";
+
+    function openForm(service) {
+      currentService = service;
+      document.getElementById('selectedService').innerText = "預約項目：" + service;
+      document.getElementById('bookingModal').classList.add('active');
+    }
+
+    function closeForm() {
+      document.getElementById('bookingModal').classList.remove('active');
+    }
+
+    async function submitBooking() {
+      const name = document.getElementById('custName').value.trim();
+      const time = document.getElementById('custTime').value.trim();
+      const remove = document.getElementById('needRemove').value;
+
+      if (!name || !time) {
+        alert("請填寫您的稱呼與希望預約的時間喔！");
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.innerText = "系統傳送中...";
+      btn.disabled = true;
+
+      try {
+        await fetch(N8N_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            service: currentService,
+            name: name,
+            time: time,
+            remove: remove
+          })
+        });
+        alert(`✅ 預約申請已成功送出！\n\n項目：${currentService}\n時間：${time}\n備註：${remove}\n\n系統已通知美睫師，稍後將為您確認時段 💕`);
+        closeForm();
+      } catch (err) {
+        alert("傳送失敗，請檢查 n8n Webhook 是否已開啟 Active！");
+      } finally {
+        btn.innerText = "確認送出預約";
+        btn.disabled = false;
+      }
+    }
+  </script>
+
 </body>
 </html>

@@ -81,11 +81,15 @@
 
       <div class="field">
         <label>您的稱呼</label>
-        <input type="text" id="custName" placeholder="例如：陳小姐">
+        <input type="text" id="custName" placeholder="例如：李小姐">
+      </div>
+      <div class="field">
+        <label>聯絡方式（手機或 LINE ID）</label>
+        <input type="text" id="custContact" placeholder="例如：0912-345-678 或 LINE ID">
       </div>
       <div class="field">
         <label>希望預約的日期與時間</label>
-        <input type="text" id="custTime" placeholder="例如：本週六下午 2:00">
+        <input type="text" id="custTime" placeholder="例如：11/29 14:00">
       </div>
       <div class="field">
         <label>是否需要卸睫？</label>
@@ -118,11 +122,12 @@
 
     async function submitBooking() {
       const name = document.getElementById('custName').value.trim();
+      const contact = document.getElementById('custContact').value.trim();
       const time = document.getElementById('custTime').value.trim();
       const remove = document.getElementById('needRemove').value;
 
-      if (!name || !time) {
-        alert("請填寫您的稱呼與希望預約的時間喔！");
+      if (!name || !contact || !time) {
+        alert("請填寫您的稱呼、聯絡方式與希望預約的時間喔！");
         return;
       }
 
@@ -137,11 +142,12 @@
           body: JSON.stringify({
             service: currentService,
             name: name,
+            contact: contact,
             time: time,
             remove: remove
           })
         });
-        alert(`✅ 預約申請已成功送出！\n\n項目：${currentService}\n時間：${time}\n備註：${remove}\n\n系統已通知美睫師，稍後將為您確認時段 💕`);
+        alert(`✅ 預約申請已成功送出！\n\n稱呼：${name}\n聯絡方式：${contact}\n項目：${currentService}\n時間：${time}\n備註：${remove}\n\n系統已通知美睫師，稍後將為您確認時段 💕`);
         closeForm();
       } catch (err) {
         alert("傳送失敗，請檢查 n8n Webhook 是否已開啟 Active！");
